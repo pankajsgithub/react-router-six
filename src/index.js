@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 // import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter as Router, Routes, Route, Navigate, Link, Outlet, useParams, NavLink } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate, Link, Outlet, useParams, NavLink, useNavigate, useLocation } from 'react-router-dom'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,6 +17,7 @@ root.render(
         </Route>
         <Route path='bundles' element={<Bundles />} />
       </Route>
+      <Route path='/offer' element={<OfferZone />} />
     </Routes>
   </Router>
 );
@@ -71,10 +72,22 @@ function Bundles() {
 }
 
 function CourseId() {
+  const navigate = useNavigate()
   const { courseid } = useParams()
   return (
     <div>
       <h1>URL Param : {courseid}</h1>
+      <span onClick={() => { navigate('/offer', { state: '299' }) }} className='btn btn-warning'>Checkout Price</span>
+      <Link to='/offer' state={"Hey there ! Data from Link Tag"}>Link with data</Link>
+    </div>
+  )
+}
+
+function OfferZone() {
+  const location = useLocation()
+  return (
+    <div>
+      <h3>Introductory Offer Price : <span>{location.state}</span></h3>
     </div>
   )
 }
